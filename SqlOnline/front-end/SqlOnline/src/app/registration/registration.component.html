@@ -1,0 +1,23 @@
+
+<form>
+    <p>Register now</p>
+    <mat-form-field appearance="fill" class="full-width-input">
+        <mat-label>Login</mat-label>
+        <input matInput #_login>
+        
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width-input">
+        <mat-label>Password</mat-label>
+        <input matInput #_password>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width-input">
+        <mat-label>Password again</mat-label>
+        <input matInput #_password2>
+    </mat-form-field>
+    <button type="button" mat-raised-button color="primary" (click)="register(_login.value, _password.value, _password2.value)">
+        Register
+    </button>
+    <p *ngIf="message">
+        {{message}}
+    </p>
+</form>

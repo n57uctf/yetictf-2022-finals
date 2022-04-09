@@ -1,0 +1,19 @@
+
+<form>
+<p>Please login</p>
+<mat-form-field appearance="fill" class="full-width-input">
+    <mat-label>Login</mat-label>
+    <input matInput #_login>
+    
+</mat-form-field>
+<mat-form-field appearance="fill" class="full-width-input">
+    <mat-label>Password</mat-label>
+    <input matInput #_password>
+</mat-form-field>
+<button mat-raised-button color="primary" type="button" (click)="login(_login.value, _password.value)">
+    Login
+</button>
+<p *ngIf="message">
+    {{message}}
+</p>
+</form>

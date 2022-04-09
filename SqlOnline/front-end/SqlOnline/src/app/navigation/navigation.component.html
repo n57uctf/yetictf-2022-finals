@@ -1,0 +1,30 @@
+
+    <mat-toolbar *ngIf="loggedOn">
+        <button mat-button class="logo" routerLink="/about" routerLinkActive="active">
+            SQL Online
+        </button>
+        
+        <button mat-button routerLink="/" routerLinkActive="active">
+            My DBs
+        </button>
+        <button mat-button routerLink="/docs" routerLinkActive="active">
+            API
+        </button>
+        <button mat-button (click)="logout()">
+            Exit
+        </button>
+    </mat-toolbar>
+    <mat-toolbar *ngIf="!loggedOn">
+        <button mat-button class="logo" routerLink="/about" routerLinkActive="active">
+            SQL Online
+        </button>
+        <button mat-button routerLink="/login" routerLinkActive="active">
+            Login
+        </button>
+        <button mat-button routerLink="/register" routerLinkActive="active">
+            Registration
+        </button>
+        <button mat-button routerLink="/about" routerLinkActive="active">
+            About
+        </button>
+    </mat-toolbar>

@@ -1,0 +1,106 @@
+<div class="dbs">
+    <p class="header">Database Manager</p>
+    <div >
+      <button mat-raised-button class="db-button" *ngFor="let userDb of userDbs" (click)="openDialog(userDb)">
+        <mat-icon svgIcon="db_settings"></mat-icon>
+        <p class="db-name">{{userDb.db_name}}</p>
+      </button>
+    </div>
+    <button mat-raised-button class="db-button" (click)="openDBManager()">
+      <mat-icon svgIcon="db_create"></mat-icon>
+      <p class="db-name">Create new</p>
+    </button>
+    <mat-divider></mat-divider>
+    <p class="header">{{message}}</p>
+</div>
+
+<div class="db-info" *ngIf="currentDBInfo">
+  <p class="header">Database information</p>
+  <div>
+    <p class="p-db-info"><b>DB name: </b>{{currentDBInfo.db_name}}</p>
+    <p class="p-db-info"><b>Tables count: </b>{{currentDBInfo.table_count}}</p>
+    <p class="p-db-info"><b>Creation date: </b>{{currentDBInfo.create_date}}</p>
+    <p class="p-db-info"><b>Description: </b>{{currentDBInfo.description}}</p>
+  </div>
+</div>
+
+<div class="db-create" *ngIf="isDBManagerVisable">
+  <p class="header">Create Database</p>
+  <mat-form-field appearance="fill" class="table-name-input">
+    <mat-label>Database name</mat-label>
+    <input matInput #_dbName>
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="table-name-input">
+    <mat-label>Database discription</mat-label>
+    <textarea matInput #_dbDesc placeholder="Decription..."></textarea>
+  </mat-form-field>
+  <div>
+    <button mat-raised-button class="db-button" *ngFor="let table of this.newDatabase.tables">
+      <mat-icon svgIcon="table"></mat-icon>
+      <p class="db-name">{{table.tableName}}</p>
+    </button>
+  </div>
+  <button mat-raised-button class="db-button" (click)="openTableManager()">
+    <mat-icon svgIcon="table"></mat-icon>
+    <p class="db-name">Create new table</p>
+  </button>
+  <div>
+    <button mat-raised-button class="save-button" (click)="addDB(_dbName.value, _dbDesc.value)">Save database</button>
+  </div>
+  <mat-divider></mat-divider>
+</div>
+
+
+<div class="table-create" *ngIf="this.isTableManagerVisable">
+  
+  <p class="header">Create table</p>
+
+  <div>
+  <mat-form-field appearance="fill" class="table-name-input">
+    <mat-label>Table name</mat-label>
+    <input matInput #_tableName>
+  </mat-form-field>
+  </div>
+
+  <div class="table-container">
+    <table #_table mat-table [dataSource]="this.newTable.columns">
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+    
+      <!-- Position Column -->
+      <ng-container matColumnDef="columnName">
+        <th mat-header-cell *matHeaderCellDef>Column name</th>
+        <td mat-cell *matCellDef="let element"> {{element.columnName}} </td>
+      </ng-container>
+    
+      <!-- Name Column -->
+      <ng-container matColumnDef="varType">
+        <th mat-header-cell *matHeaderCellDef>Datatype</th>
+        <td mat-cell *matCellDef="let element"> {{element.varType}} </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    
+  </div>
+
+  <div class="control-panel">
+  <mat-form-field appearance="fill" class="master-input">
+    <mat-label>Column name</mat-label>
+    <input matInput #_colName>
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="master-input">
+    <mat-label>Datatype</mat-label>
+    <mat-select #_varType>
+      <mat-option *ngFor="let type of varTypes" [value]="type">
+        {{type}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-raised-button class="save-button" type="button" (click)="addColumn(_colName.value, _varType.value)">Add Column</button>
+  <button mat-raised-button class="save-button" type="button" (click)="deleteColumn()">Delete Column</button>
+  <button mat-raised-button class="save-button" (click)="addTable(_tableName.value)">Save table</button>
+</div>
+</div>

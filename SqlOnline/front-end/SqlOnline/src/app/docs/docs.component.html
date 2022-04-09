@@ -1,0 +1,33 @@
+<div class="docs">
+    <p class="header">API Documentation</p>
+    <p>Methods</p>
+    <mat-card class="method">
+        <b>GET /api/v1/dbs?key=&lt;api_key&gt;</b><br><br>
+        <b>Description: </b>Info about your databases<br>
+    </mat-card>
+    <mat-card class="method">
+        <b>GET /api/v1/?key=&lt;api_key&gt;&db=&lt;db_name&gt;&table=&lt;table_name&gt;&column=&lt;column_name&gt;&value=&lt;value&gt;</b><br><br>
+        <b>Description: </b>Select row from table from database (if no column return all table)<br>    
+    </mat-card>
+    <mat-card class="method">
+        <b>POST /api/v1/?key=&lt;api_key&gt;&db=&lt;db_name&gt;&table=&lt;table_name&gt;</b><br><br>
+        <b>Body: {{
+            {
+                "row": [
+                  {
+                    "column_name": "string",
+                    "value": "string"
+                  }
+                ]
+              } | json
+        }}</b><br><br>
+        <b>Description: </b>Insert row to table to database<br>
+    </mat-card>
+    <mat-card class="method">
+        <b>DELETE /api/v1/?key=&lt;api_key&gt;&db=&lt;db_name&gt;&table=&lt;table_name&gt;&column=&lt;column_name&gt;&value=&lt;value&gt;</b><br><br>
+        <b>Description: </b>Delete row with specific column and specific value<br>
+    </mat-card>
+
+    <p>Your API key</p>
+    <mat-card class="api-key"><b>{{userApiKey}}</b></mat-card>
+</div>
