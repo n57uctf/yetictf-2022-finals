@@ -1,0 +1,11 @@
+service mynetd
+{
+	disable = no
+	flags = REUSE
+	type = UNLISTED
+	socket_type = stream
+	port = 7777
+	wait = no
+	user = casic
+	server = /casic
+}

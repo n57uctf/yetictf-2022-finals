@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+
+  casic:
+    build: .
+    ports:
+      - 7777:7777
+    restart: always
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    volumes:
+      - /private/var/lib/postgresql:/var/lib/postgresql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: casic
+      POSTGRES_PASSWORD: casic_password
+      POSTGRES_DB: casic
