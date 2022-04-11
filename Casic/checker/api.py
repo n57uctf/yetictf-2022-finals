@@ -17,7 +17,7 @@ def verdict(code, public="", private=""):
         print(public)
     if private:
         print(private, file=sys.stderr)
-    print('Exit with code {}'.format(code), file=sys.stderr)
+    print('Exit with code {}'.format(code))
     exit(code)
 
 def connect(host):
