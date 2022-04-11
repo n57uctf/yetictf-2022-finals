@@ -1,0 +1,4 @@
+[submodule "merc2022"]
+	path = merc2022
+	url = https://github.com/n57uctf/merc2022
+	branch = main
