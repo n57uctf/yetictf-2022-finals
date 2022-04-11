@@ -84,10 +84,8 @@ COMMANDS = {
     'init': init
 }
 
-# TODO: ret codes
 if __name__ == "__main__":
     try:
         COMMANDS.get(sys.argv[1])(*sys.argv[2:])
     except Exception as ex:
         api.verdict(api.CHECKER_ERROR, private="INTERNAL ERROR: {}".format(ex))
-
