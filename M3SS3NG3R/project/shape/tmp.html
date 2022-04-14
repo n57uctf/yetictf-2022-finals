@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div id="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="wrap-headline">
+                    <h1 class="text-center sign-wrap-4"><div class="sign_word"><span>Crypto Messenger</span></div></h1>
+                    <h2 class="text-center" id="subheader">You are Sign-UP successfully !</h2>
+                </div>
+            </div>
+        </div>
+        <div id="intro-header">
+            <div class="container">
+                <div class="row">
+                    <h1 class="text-center sign-wrap-4">Your data</h1>
+                    <h2 class="text-center" id="subheader">It remains only to activate the profile using authorization !</h2>
+                        <ol style="color: aliceblue;">
+                            <li><p>Login: {{user_data.login}}</p>
+                                <ul>
+                                    <li>
+                                        <p>ID: {{user_data.id}}</p>
+                                    </li>
+                                    <li>
+                                        <p>Date of registration: {{user_data.date}}</p>
+                                    </li>
+                                    <li>
+                                        <p>Hashed password: {{user_data.password}}</p> 
+                                    </li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+    </div>
+{% endblock %}

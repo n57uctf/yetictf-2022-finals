@@ -59,7 +59,8 @@ async def signUp(request: Request, login: str = Form(...), passwrd: str = Form(.
             UnicornException("This user already registered, him pass: "+str(if_already_registered), 400))
     else:
         instance = schemas.UserCreate(login=login, password=passwrd)
-        return await crud.create_user(database, instance)
+        result = await crud.create_user(database, instance)
+        return temp.TemplateResponse("tmp.html", {"request": request, "user_data": result})
 
 @user_router.get("/sign-in")
 async def signInGet(request: Request):
