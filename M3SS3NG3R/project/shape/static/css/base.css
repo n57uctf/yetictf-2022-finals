@@ -1,0 +1,266 @@
+@font-face {
+font-family: "Neon";
+src: url("../fonts/NeonAbsoluteSans.ttf") format("opentype");
+}
+
+body {
+    background-color: #091833;
+    background-size: cover;
+    font-family: "Neon";
+}
+
+.navbar-brand img {
+    height: 100%;
+}
+
+.navbar-default {
+    background-color: #711c91;
+}
+
+.navbar-default .navbar-nav > li > a,
+.navbar-default .navbar-nav > li > a:hover {
+    color: #FFF;
+    -webkit-transition: all 150ms ease-in-out;
+    -moz-transition: all 150ms ease-in-out;
+    -ms-transition: all 150ms ease-in-out;
+    -o-transition: all 150ms ease-in-out;
+    transition: all 150ms ease-in-out;
+}
+
+.navbar-default .navbar-nav > .active > a {
+    background-color: transparent;
+    color: #FFF;
+    padding-bottom: 0.62em;
+    border-bottom: 0.45em solid #FFF;
+}
+
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > li > a:hover {
+    background-color: transparent;
+    color: #F3F3F3;
+    padding-bottom: 0.62em;
+    border-bottom: 0.45em solid #F3F3F3;
+}
+
+.navbar-header .navbar-toggle,
+.navbar-default .navbar-toggle:focus {
+  background-color: #711c91;
+}
+
+.navbar-default .navbar-toggle:hover {
+  background-color: #501366; 
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #FFF;
+}
+
+@media(max-width:34em){
+  .navbar-default .navbar-nav > .active > a {
+    border-bottom: none;
+    border-left: 0.45em solid #FFF;
+    padding-left: 0.5em;
+  }
+}
+
+#intro-header .wrap-headline {
+    position: relative;
+    padding-top: 17%;
+    padding-bottom: 13%;
+}
+
+h1, h2, h3 {
+    color: #FFF;
+}
+
+h1, h2 {
+    text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 40px #ff00de, 0 0 80px #ff00de, 0 0 90px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de;
+}
+
+#intro-header h1, 
+#profile h1, 
+#planners h1,
+#planner h1 {
+    animation: neon .5s ease-in-out infinite alternate;
+    font-size: 6rem;
+}
+
+#intro-header h2 {
+    font-size: 1.5rem;
+}
+
+#intro-header hr {
+    width: 10%;
+}
+
+.btn-default {
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid #fff;
+    color: #FFF;
+    text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 20px #ff00de, 0 0 40px #ff00de;
+}
+
+input {
+    background-color: rgba(0,0,0,0);
+    color: #FFF;
+}
+
+.form-control:focus {
+    border-color: #711c91;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);
+}
+
+#profile .wrap-headline,
+#planners .wrap-headline,
+#planner .wrap-headline {
+    position: relative;
+    padding-top: 5%;
+    padding-bottom: 0%;
+}
+
+#profile form {
+    font-size: 1.75rem;
+    margin-top: 3rem;
+    margin-bottom: 0rem;
+}
+
+#profile hr {
+    border:none;
+    height: 20px;
+    width: 90%;
+    height: 50px;
+    margin-top: 0;
+    border-bottom: 1px solid #1f1209;
+    box-shadow: 0 20px 20px -20px #ff00de;
+    margin: -50px auto 10px; 
+}
+
+#planners table,
+#planner table {
+    color: #FFF;
+    font-size: 2rem;
+    text-align: center;
+}
+
+#planners table {
+    margin-top: 3rem;
+}
+
+#planners thead,
+#planner thead {
+    text-shadow: 0 0 5px #ffffff, 0 0 10px #ff00de, 0 0 20px #ff00de;
+}
+
+th {text-align: center;}
+
+#planners .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: rgba(113,28,145,0.8);
+}
+
+#planner .table-hover tbody tr:hover {
+  background-color: rgba(113,28,145,0.5);
+}
+
+#planner table {
+  overflow: hidden;
+}
+
+#planner .table-hover {
+    overflow: hidden;
+    z-index: 1;
+}
+#planner .table-hover tbody td, .table-hover thead th {
+    position: relative;
+}
+#planner .table-hover tbody td:hover::after,
+#planner .table-hover thead th:hover::after {
+    content: "";
+    position: absolute;
+    background-color: rgba(113,28,145,0.5);
+    left: 0;
+    top: -5000px;
+    height: 10000px;
+    width: 100%;
+    z-index: -1;
+}
+
+#planner div:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+
+@keyframes neon {
+  from {
+    text-shadow:
+        0 0 6px  rgba(255,255,255,0.92), 
+        0 0 30px rgba(255,255,255,0.34), 
+        0 0 12px rgba(255,255,255,0.52), 
+        0 0 21px rgba(255,0,222,0.92), 
+        0 0 34px rgba(255,0,222,0.78), 
+        0 0 54px rgba(255,0,222,0.92);
+  }
+  to {
+    text-shadow:
+        0 0 6px  rgba(255,255,255,0.98), 
+        0 0 30px rgba(255,255,255,0.42), 
+        0 0 12px rgba(255,255,255,0.58), 
+        0 0 22px rgba(255,0,222,0.84), 
+        0 0 38px rgba(255,0,222,0.88), 
+        0 0 60px rgba(255,0,222,1);
+  }
+}
+
+.sign-wrap-4 .sign_word span {
+    animation: neon-4 linear infinite 5s;
+}
+@keyframes neon-4 {
+    78% {
+        color: inherit;
+        text-shadow: inherit;
+    }
+    79%{
+        color: #000;
+    }
+    80% {
+        text-shadow: none;
+    }
+    81% {
+        color: inherit;
+        text-shadow: inherit;
+    }
+    82% {
+        color: #000;
+        text-shadow: none;
+    }
+    83% {
+        color: inherit;
+        text-shadow: inherit;
+    }
+    92% {
+        color: #000;
+        text-shadow: none;
+    }
+    92.5% {
+        color: inherit;
+        text-shadow: inherit;
+    }
+}
+
+.hidden-element {
+    display: none;
+}
+
+.modal-header{
+    background-color: rgba(113,28,145,0.85);
+}
+
+.modal-body{
+    background-color: #FFF;
+}
+
+.bootstrap-datetimepicker-widget, #weeklyDatePicker {
+    background-color: #000;
+    color: #FFF;
+}
+

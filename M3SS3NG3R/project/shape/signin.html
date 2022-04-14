@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div id="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="wrap-headline">
+                <h1 class="text-center sign-wrap-4"><div class="sign_word"><span>Sign IN</span></div></h1>
+                <h2 class="text-center" id="subheader">Just do it</h2>
+                <h2 class="text-center hidden-element" id="regheader">Sign IN</h2>
+                <hr>
+                
+                <form method="post" id="signin" class="form-inline text-center">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></div>
+                            <input type="text" class="form-control" name="login" placeholder="Login">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-lock" aria-hidden="true"></i></div>
+                            <input type="password" class="form-control" name="password" placeholder="Password">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-default" id="signinform-btn">Sign in</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

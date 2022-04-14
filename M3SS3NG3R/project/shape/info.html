@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div id="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="wrap-headline">
+                    <h1 class="text-center sign-wrap-4"><div class="sign_word"><span>{{ status }}</span></div></h1>
+                    <h2 class="text-center" id="subheader">{{ message }}</h2>
+                    <h2 class="text-center hidden-element" id="regheader">Error page</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}

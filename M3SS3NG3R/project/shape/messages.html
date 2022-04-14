@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+<!-- GET ALL MESSEGES FOR USER THERE! -->
+{% block content %}
+<div id="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="wrap-headline">
+                <h1 class="text-center sign-wrap-4"><div class="sign_word"><span>Messages</span></div></h1>
+                <h2 class="text-center" id="subheader">Write right messages anyone</h2>
+                <h2 class="text-center hidden-element" id="regheader">Messages</h2>
+                <hr>
+                <form method="post" id="signin" class="form-inline text-center">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></div>
+                            <input type="text" class="form-control" name="recipientName" placeholder="Recipient">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-lock" aria-hidden="true"></i></div>
+                            <input type="text" class="form-control" name="message" placeholder="Your message">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-default" id="signinform-btn">Send</button>
+                </form>
+            </div>
+            {% if length %}
+                <h1 class="text-center sign-wrap-4"><div class="sign_word"><span>Incoming messages</span></div></h1>
+                <h2 class="text-center" id="subheader">You have {{ length }} new messages, see if there is something important!</h2>
+                <ol style="color: aliceblue;">
+                    {% for mes in messages %}
+                        <li><p>From: {{mes.login}}</p>
+                            <ul>
+                                <li>
+                                    <p>Online: {{mes.is_active}}</p> 
+                                </li>
+                                <li>
+                                    <p>Message: {{mes.Messege}}</p>
+                                </li>
+                                <li>
+                                    <p>Date of registration: {{mes.date}}</p>
+                                </li>
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ol>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

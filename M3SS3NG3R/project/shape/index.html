@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div id="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="wrap-headline">
+                    <h1 class="text-center sign-wrap-4"><div class="sign_word"><span>Crypto Messenger</span></div></h1>
+                    <h2 class="text-center" id="subheader">Welcome{% if isAutorized %} to YetiCTF, {{ isAutorized }}{% endif %}</h2>
+                    <h2 class="text-center hidden-element" id="regheader">Index page</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if length %}
+        <div id="intro-header">
+            <div class="container">
+                <div class="row">
+                    <h1 class="text-center sign-wrap-4">All users</h1>
+                        <h2 class="text-center" id="subheader">Without u :(</h2>
+                        <ol style="color: aliceblue;">
+                        {% for user in users %}
+                            <li><p>Username: {{user.login}}</p>
+                                <ul>
+                                    <li>
+                                        <p>ID: {{user.id}}</p>
+                                    </li>
+                                    <li>
+                                        <p>Date of registration: {{user.date}}</p>
+                                    </li>
+                                    <li>
+                                        <p>Online: {{user.is_active}}</p> 
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

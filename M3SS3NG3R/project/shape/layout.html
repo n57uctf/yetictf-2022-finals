@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, inital-scale=1">
+
+    <link rel="icon" href="{{ url_for('im', path='/favicon.ico') }}">
+    <title>M3SS3NG3R</title>
+    
+    <link rel="stylesheet" href="{{ url_for('styles', path='/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('styles', path='/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('styles', path='/all.css') }}">
+    <link rel="stylesheet" href="{{ url_for('styles', path='/bootstrap-datetimepicker.css') }}" />
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div id="nav-menu" class="collapse navbar-collapse navbar-right">
+                <ul class="nav navbar-nav">
+                    <li id="home">
+                        <a href="/">
+                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                            Home
+                        </a>
+                    </li>
+                    <li id="sign-up">
+                        <a href="/api/user/sign-up">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            Sign Up
+                        </a>
+                    </li>
+                    <li id="sign-in">
+                        <a href="/api/user/sign-in">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            Sign In
+                        </a>
+                    </li>
+                    {% if isAutorized %}
+                    <li id="messenges">
+                        <a href="/api/user/sign-in/messages">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            Messenges
+                        </a>
+                    </li>
+                    <li id="All users">
+                        <a href="/api/user/sign-in/messages/all-users">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            All users
+                        </a>
+                    </li>
+                    <li id="profile">
+                        <a href="/api/user/log-out">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                            Logout
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    {% block content %}
+    {% endblock %}
+    <script src="{{ url_for('js', path='/jquery-1.11.3.js') }}"></script>
+    <script src="{{ url_for('js', path='/moment-with-locales.min.js') }}"></script>
+    <script src="{{ url_for('js', path='/bootstrap.js') }}"></script>
+    <script src="{{ url_for('js', path='/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ url_for('js', path='/main.js') }}"></script>
+    {% block additional_js %}
+    {% endblock %}
+</body>
+</html>

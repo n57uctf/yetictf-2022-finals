@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+
+  db:
+    image: postgres
+    #volumes:
+            #- /private/var/lib/postgresql:/var/lib/postgresql
+        #- "./db.sh:/usr/src/app/docker-entrypoint-initdb.d/initdb.sh"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: users
+
+  web:
+    build: ./project
+    volumes:
+      - ./project:/usr/src/app
+    ports:
+      - 8004:8000
+    restart: always
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/users?sslmode=disable
+    depends_on:
+      - db
