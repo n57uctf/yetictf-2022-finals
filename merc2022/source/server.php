@@ -197,7 +197,7 @@ if (isset($_POST['driver'])) {
 
   if (count($errors) == 0) {
     image_process($_FILES['avatar']['tmp_name'],'avatars/'.$name.'.png');
-    file_put_contents('licenses/'.$name.'.png', file_get_contents($_FILES['license']['tmp_name']));
+    move_uploaded_file($_FILES['license']['tmp_name'],'licenses/'.$name.'.png');
     $avatar = file_get_contents('avatars/'.$name.'.png');
     $license = file_get_contents('licenses/'.$name.'.png');
         $driver_id = driver_id($name,$avatar);

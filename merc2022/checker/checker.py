@@ -100,7 +100,7 @@ class CheckMachine:
 
         self.license(flag)
 
-        num = "2"
+        num = randrange(5)
 
         multipart = MultipartEncoder(
             fields = {
