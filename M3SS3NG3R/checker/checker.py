@@ -204,7 +204,7 @@ def put(host, flag_id, flag, vuln_number):
 		if r.status_code != 200:
 			cquit(Status.MUMBLE, f'Code {r.status_code} on logout_1 {r.url}')
 
-		cquit(Status.OK, "OK")
+	cquit(Status.OK, "OK")
 
 def get(host, flag_id, flag, vuln_number):
 
@@ -236,8 +236,8 @@ def get(host, flag_id, flag, vuln_number):
 			r = requests.get(f'http://{host}:{port}/api/user/log-out')
 			if r.status_code != 200:
 				cquit(Status.MUMBLE, f'Code {r.status_code} on logout_1 {r.url}')
-		else:
-			cquit(Status.OK, f'OK')
+	
+	cquit(Status.OK, f'OK')
 
 
 
