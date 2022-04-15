@@ -102,22 +102,25 @@ class CheckMachine:
 
         num = randrange(5)
 
-        multipart = MultipartEncoder(
-            fields = {
+        values = {
                 'name':name,
                 'vehicle':vehicle,
                 'about':bio,
                 'status':'0',
                 'driver':'',
+                 }
+        files = {
                 'avatar': (f'{num}.png', open(BASE_DIR / f'{num}.png','rb'), 'image/png'),
                 'license': ('license.png', open(BASE_DIR / 'license.png','rb'), 'image/png')
-            }
-        )
+                }
+
         sess = get_initialized_session()
 
-        resp = sess.post(f'{self.url}/driver.php', data=multipart, headers={'Content-Type': multipart.content_type})
+        resp = sess.post(f'{self.url}/driver.php', data=values, files=files)
         check_response(resp, "Can't create driver")
 
+        time.sleep(3)
+        
         resp = sess.get(f'{self.url}/application.php')
         check_response(resp, "Can't get profile")
 
