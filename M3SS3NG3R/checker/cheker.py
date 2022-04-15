@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
-
 import sys
 import requests
 import enum
 import typing
 import random
 
-port = 8000
+port = 8004
 
 def random_line(l: int = -1):
 	if l == -1:
@@ -30,6 +29,7 @@ class Status(enum.Enum):
 		return self.value == Status.OK
 
 def cquit(status: Status, public: str='', private: typing.Optional[str] = None):
+	print()
 	if private is None:
 		private = public
 
@@ -43,7 +43,7 @@ def check(host):
 	# check pages
 	r = requests.get(f'http://{host}:{port}/')
 	if r.status_code != 200:
-		cquit(Status.MUMBLE, f'Code {r.status_code} on url {r.url}') 
+		cquit(Status.DOWN, f'Code {r.status_code} on url {r.url}') 
 	r = requests.get(f'http://{host}:{port}/api/user/sign-up')
 	if r.status_code != 200:
 		cquit(Status.MUMBLE, f'Code {r.status_code} on url {r.url}')
@@ -82,7 +82,7 @@ def check(host):
 	if r.status_code != 200:
 		cquit(Status.MUMBLE, f'Code {r.status_code} on logout_1 {r.url}')
 	r = requests.get(f'http://{host}:{port}/api/user/sign-in/messages/all-users')
-	if r.status_code != 400:
+	if r.text.find('<h1 class="text-center sign-wrap-4"><div class="sign_word"><span>400</span></div></h1>') == -1:
 		cquit(Status.MUMBLE, f'Code {r.status_code} on check logout_1 {r.url}')	
 
 	#check send messege
@@ -99,7 +99,7 @@ def check(host):
 	if r.status_code != 200:
 		cquit(Status.MUMBLE, f'Code {r.status_code} on logout_1 {r.url}')
 	r = requests.get(f'http://{host}:{port}/api/user/sign-in/messages/all-users')
-	if r.status_code != 400:
+	if r.text.find('<h1 class="text-center sign-wrap-4"><div class="sign_word"><span>400</span></div></h1>') == -1:
 		cquit(Status.MUMBLE, f'Code {r.status_code} on check logout_1 {r.url}')	
 
 	r = requests.post(f'http://{host}:{port}/api/user/sign-in', data = {'login':log2, 'password':pass2})
@@ -124,8 +124,8 @@ def check(host):
 	if r.status_code != 200:
 		cquit(Status.MUMBLE, f'Code {r.status_code} on logout_2 {r.url}')
 	r = requests.get(f'http://{host}:{port}/api/user/sign-in/messages/all-users')
-	if r.status_code != 400:
-		cquit(Status.MUMBLE, f'Code {r.status_code} on check logout_2 {r.url}')	
+	if r.text.find('<h1 class="text-center sign-wrap-4"><div class="sign_word"><span>400</span></div></h1>') == -1:
+		cquit(Status.MUMBLE, f'Code {r.status_code} on check logout_1 {r.url}')	
 
 	r = requests.post(f'http://{host}:{port}/api/user/sign-in', data = {'login':log1, 'password':pass1})
 	if r.status_code != 200:
@@ -142,8 +142,8 @@ def check(host):
 	if r.status_code != 200:
 		cquit(Status.MUMBLE, f'Code {r.status_code} on logout_1 {r.url}')
 	r = requests.get(f'http://{host}:{port}/api/user/sign-in/messages/all-users')
-	if r.status_code != 400:
-		cquit(Status.MUMBLE, f'Code {r.status_code} on check logout_1 {r.url}')	
+	if r.text.find('<h1 class="text-center sign-wrap-4"><div class="sign_word"><span>400</span></div></h1>') == -1:
+		cquit(Status.MUMBLE, f'Code {r.status_code} on check logout_1 {r.url}')		
 	
 	#check all users (with new user)
 	r = requests.post(f'http://{host}:{port}/api/user/sign-in', data = {'login':log1, 'password':pass1})
@@ -164,7 +164,7 @@ def check(host):
 	if r.status_code != 200:
 		cquit(Status.MUMBLE, f'Code {r.status_code} on logout_1 {r.url}')
 	r = requests.get(f'http://{host}:{port}/api/user/sign-in/messages/all-users')
-	if r.status_code != 400:
+	if r.text.find('<h1 class="text-center sign-wrap-4"><div class="sign_word"><span>400</span></div></h1>') == -1:
 		cquit(Status.MUMBLE, f'Code {r.status_code} on check logout_1 {r.url}')	
 
 	cquit(Status.OK, 'OK')
@@ -200,6 +200,10 @@ def put(host, flag_id, flag, vuln_number):
 		if r.status_code != 200:
 			cquit(Status.MUMBLE, f'Code {r.status_code} on mes 1 to 2 {r.url}')
 
+		r = requests.get(f'http://{host}:{port}/api/user/log-out')
+		if r.status_code != 200:
+			cquit(Status.MUMBLE, f'Code {r.status_code} on logout_1 {r.url}')
+
 		cquit(Status.OK, "OK")
 
 def get(host, flag_id, flag, vuln_number):
@@ -209,8 +213,11 @@ def get(host, flag_id, flag, vuln_number):
 		pass1 = flag
 		r = requests.post(f'http://{host}:{port}/api/user/sign-in', data = {'login':log1, 'password':pass1})
 		if r.status_code != 200:
-			cquit(Status.MUMBLE, f'Code {r.status_code} on sig-in1_flag {r.url}')
+			cquit(Status.CORRUPT, f'Code {r.status_code} on sig-in1_flag {r.url}')
 		else:
+			r = requests.get(f'http://{host}:{port}/api/user/log-out')
+			if r.status_code != 200:
+				cquit(Status.MUMBLE, f'Code {r.status_code} on logout_1 {r.url}')
 			cquit(Status.OK, f'OK')
 
 	if vuln_number == 2:
@@ -225,7 +232,12 @@ def get(host, flag_id, flag, vuln_number):
 			cquit(Status.MUMBLE, f'Code {r.status_code} on check mes 1 to 2 {r.url}')
 		res = r.text.find(flag)
 		if res == -1:
-			cquit(Status.MUMBLE, f"Can't take mes 2")
+			cquit(Status.CORRUPT, f"Can't take mes 2")
+			r = requests.get(f'http://{host}:{port}/api/user/log-out')
+			if r.status_code != 200:
+				cquit(Status.MUMBLE, f'Code {r.status_code} on logout_1 {r.url}')
+		else:
+			cquit(Status.OK, f'OK')
 
 
 
