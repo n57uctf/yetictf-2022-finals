@@ -15,6 +15,7 @@ ENV DB_PASSWORD=${DB_PASSWORD}
 
 RUN a2enmod rewrite
 ADD ./source /var/www/html
+RUN chown -R www-data:www-data /var/www/html
 RUN chmod -R 777 /var/www/html
 RUN service apache2 restart
-USER root
+USER www-data
