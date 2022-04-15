@@ -1,0 +1,4 @@
+checklib==0.5.2
+Pillow==9.0.1
+requests==2.22.0
+requests_toolbelt==0.9.1

@@ -1,0 +1,58 @@
+table, th {
+  border: 6px solid black;
+  border-collapse: collapse;
+  background-color:  sand;
+  border-style: inset;
+  border-color: grey;
+  width: 615px;
+  word-wrap: break-word;
+}
+td {
+  border: 6px solid black;
+  border-collapse: collapse;
+  background-color:  sand;
+  border-style: inset;
+  border-color: grey;
+  width: 20%;
+  word-wrap: break-word;
+}
+body {
+  background-image: url(background.jpg);
+}
+input[type="radio"]+label{
+    all:revert;
+    display: inline-block;
+    cursor: pointer;
+    padding: 0px 12px;
+    line-height: 24px;
+    border: 1px;
+    user-select: none;
+}
+input[type="radio"]:checked+label{
+    background: lightgrey;
+    color: black;
+}
+input[type="radio"]+label:hover{
+    color: black;
+    background: lightgrey;
+}
+pre > button{
+  all: revert;
+  display: inline-block;
+  cursor: pointer;
+  padding: 0px 12px;
+  line-height: 24px;
+  border: 1px;
+  user-select: none;
+  background:black; 
+  color:lightgrey;
+  font-family:Perfect DOS VGA\ 437 Win; 
+  font-size:16px; 
+  border: black;
+  outline: none;
+  box-shadow: none;
+}
+pre > button:hover{
+  background: lightgrey;
+  color: black;
+}
