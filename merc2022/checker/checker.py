@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import requests, re, sys
+import requests, re, sys, time
 from PIL import Image
 from PIL.PngImagePlugin import PngImageFile, PngInfo
 from requests_toolbelt.multipart.encoder import MultipartEncoder
