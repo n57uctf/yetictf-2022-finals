@@ -1,0 +1,21 @@
+<html>
+<head>
+	<title>Bank Accout</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" media="screen">
+</head>
+<body>
+	<center>
+		<h1>Account</h1>
+		<h3> Hi {{login}} </h3>
+		<form action ="/logout" method="POST">
+			<input class="btn btn-default" type="submit" value="logout">
+		<br></br>
+		<h3> Your balance: {{balance}}</h3>
+		<a class="btn btn-link" href="/transfer">Transfer balance</h3>
+		<a class="btn btn-link" href="/history?url=http://127.0.0.1:8081/{{mumble}}">History</a></h3>
+		<a class="btn btn-link" href="/users">Users</a>
+		</form>
+</center>
+</body>
+</html>

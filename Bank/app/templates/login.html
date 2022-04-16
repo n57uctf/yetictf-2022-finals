@@ -1,0 +1,20 @@
+<html>
+<head>
+  <title>Bank Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" media="screen">
+</head>
+<body>
+	<center><h1>Login</h1>
+    <form action ="/login" method="POST">
+      <br></br>
+        <input class="form-check-label" placeholder="Login" type="text" name="login"><br>
+      <br></br>
+        <input class="form-check-label" placeholder="Password" type="password" name="password"><br>
+      <br></br>
+        <input class="btn btn-default" type="submit" value="Submit"><br>
+        <br>
+        {{error}}
+  </center>
+</body>
+</html>
