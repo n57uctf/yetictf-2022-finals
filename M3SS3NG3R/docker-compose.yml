@@ -2,7 +2,7 @@ version: "3"
 
 services:
 
-  db:
+  db_m3s:
     image: postgres
     restart: always
     volumes:
@@ -23,6 +23,6 @@ services:
       - 8004:8000
     restart: always
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/users?sslmode=disable
+      - DATABASE_URL=postgresql://postgres:postgres@db_m3s:5432/users?sslmode=disable
     depends_on:
-      - db
+      - db_m3s
