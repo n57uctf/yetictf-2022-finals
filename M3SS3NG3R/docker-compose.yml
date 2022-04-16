@@ -4,8 +4,8 @@ services:
 
   db:
     image: postgres
-    volumes:
     restart: always
+    volumes:
       - /private/var/lib/postgresql:/var/lib/postgresql
     ports:
       - "5432:5432"
