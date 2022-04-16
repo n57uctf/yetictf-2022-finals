@@ -135,10 +135,15 @@ class CheckMachine:
 
         for i in range(3):
             resp = sess.get(f'{self.url}/image.php?license')
-            if 'PNG' in resp.content:
+            if b'PNG' in resp.content:
                 break
             else:
-                cquit(Status.MUMBLE, 'Couldn\' get license image')
+                #cquit(Status.MUMBLE, 'Couldn\' get license image')
+                time.sleep(1)
+
+        if b'PNG' not in resp.content:
+            cquit(Status.MUMBLE, 'Couldn\' get license image')
+
         check_response(resp, "Can't get license")
 
         open(BASE_DIR / 'response.png','wb').write(resp.content)
