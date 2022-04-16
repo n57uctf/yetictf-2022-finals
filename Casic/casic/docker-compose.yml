@@ -17,6 +17,7 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5434:5432"
+    restart: always
     environment:
       POSTGRES_USER: casic
       POSTGRES_PASSWORD: casic_password

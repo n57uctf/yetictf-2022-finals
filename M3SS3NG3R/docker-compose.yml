@@ -4,9 +4,9 @@ services:
 
   db:
     image: postgres
-    #volumes:
-            #- /private/var/lib/postgresql:/var/lib/postgresql
-        #- "./db.sh:/usr/src/app/docker-entrypoint-initdb.d/initdb.sh"
+    volumes:
+    restart: always
+      - /private/var/lib/postgresql:/var/lib/postgresql
     ports:
       - "5432:5432"
     environment:
@@ -17,6 +17,7 @@ services:
   web:
     build: ./project
     volumes:
+    restart: always
       - ./project:/usr/src/app
     ports:
       - 8004:8000
