@@ -116,9 +116,13 @@ class CheckMachine:
 
         sess = get_initialized_session()
 
-        resp = sess.post(f'{self.url}/driver.php', data=values, files=files)
-        check_response(resp, "Can't create driver")
-
+        for i in range(2):
+            resp = sess.post(f'{self.url}/driver.php', data=values, files=files)
+            if resp.status_code == 200:
+                break
+            else:
+                check_response(resp, "Can't create driver")
+        
         time.sleep(3)
         
         resp = sess.get(f'{self.url}/application.php')
@@ -129,7 +133,12 @@ class CheckMachine:
         else:
             cquit(Status.MUMBLE, "Can't find Driver ID")
 
-        resp = sess.get(f'{self.url}/image.php?license')
+        for i in range(3):
+            resp = sess.get(f'{self.url}/image.php?license')
+            if 'PNG' in resp.content:
+                break
+            else:
+                cquit(Status.MUMBLE, 'Couldn\' get license image')
         check_response(resp, "Can't get license")
 
         open(BASE_DIR / 'response.png','wb').write(resp.content)
