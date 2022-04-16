@@ -19,4 +19,4 @@ RUN python3 -m pip install -r requirements.txt
 
 COPY . .
 
-CMD ["uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["/bin/bash", "-c", "./start.sh"]

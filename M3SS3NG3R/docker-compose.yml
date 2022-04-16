@@ -2,11 +2,21 @@ version: "3"
 
 services:
 
-  db_m3s:
-    image: postgres
+  web:
+    build: ./project
     restart: always
     volumes:
-      - /private/var/lib/postgresql:/var/lib/postgresql
+      - ./project:/usr/src/app
+    ports:
+      - 8004:8000
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db_ms:5432/users?sslmode=disable
+    depends_on:
+      - db_ms
+
+  db_ms:
+    image: postgres
+    restart: always
     ports:
       - "5438:5432"
     environment:
@@ -14,14 +24,3 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: users
 
-  web:
-    build: ./project
-    volumes:
-      - ./project:/usr/src/app
-    ports:
-      - 8004:8000
-    restart: always
-    environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db_m3s:5432/users?sslmode=disable
-    depends_on:
-      - db_m3s
