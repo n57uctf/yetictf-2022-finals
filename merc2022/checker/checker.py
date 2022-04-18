@@ -89,16 +89,16 @@ class CheckMachine:
         else:
             return 'corrupt'
 
-    def license(self, flag):
+    def license(self, flag, name):
 
         img = PngImageFile(BASE_DIR / 'random.png')
         meta = PngInfo()
         meta.add_text("Comment", flag)
-        img.save(BASE_DIR / 'license.png',pnginfo=meta)
+        img.save(BASE_DIR / f'{name}.png',pnginfo=meta)
 
     def driver(self, name, vehicle, bio, flag):
 
-        self.license(flag)
+        self.license(flag, name)
 
         num = randrange(5)
 
@@ -111,19 +111,13 @@ class CheckMachine:
                  }
         files = {
                 'avatar': (f'{num}.png', open(BASE_DIR / f'{num}.png','rb'), 'image/png'),
-                'license': ('license.png', open(BASE_DIR / 'license.png','rb'), 'image/png')
+                'license': (f'{name}.png', open(BASE_DIR / f'{name}.png','rb'), 'image/png')
                 }
 
         sess = get_initialized_session()
 
-        for i in range(2):
-            resp = sess.post(f'{self.url}/driver.php', data=values, files=files)
-            if resp.status_code == 200:
-                break
-            else:
-                check_response(resp, "Can't create driver")
-        
-        time.sleep(3)
+        resp = sess.post(f'{self.url}/driver.php', data=values, files=files)
+        check_response(resp, "Can't create driver")
         
         resp = sess.get(f'{self.url}/application.php')
         check_response(resp, "Can't get profile")
@@ -133,24 +127,12 @@ class CheckMachine:
         else:
             cquit(Status.MUMBLE, "Can't find Driver ID")
 
-        for i in range(3):
-            resp = sess.get(f'{self.url}/image.php?license')
-            if b'PNG' in resp.content:
-                break
-            else:
-                #cquit(Status.MUMBLE, 'Couldn\' get license image')
-                time.sleep(1)
-
-        if b'PNG' not in resp.content:
-            cquit(Status.MUMBLE, 'Couldn\' get license image')
-
+        resp = sess.get(f'{self.url}/image.php?license')
         check_response(resp, "Can't get license")
 
-        open(BASE_DIR / 'response.png','wb').write(resp.content)
+        open(BASE_DIR / f'response_{name}.png','wb').write(resp.content)
 
-        image_path = '/checkers/merc2022/response.png'
-
-        if Image.open(image_path).info['Comment'] == flag:
+        if Image.open(BASE_DIR / f'response_{name}.png').info['Comment'] == flag:
             return driver_id
         else:
             return 'corrupt'
@@ -165,9 +147,9 @@ class CheckMachine:
         resp = sess.get(f'{self.url}/image.php?license')
         check_response(resp, "Can't get license")
 
-        open(BASE_DIR / 'response2.png','wb').write(resp.content)
+        open(BASE_DIR / f'response2_{driver_id}.png','wb').write(resp.content)
 
-        if Image.open(BASE_DIR / 'response2.png').info['Comment'] == flag:
+        if Image.open(BASE_DIR / f'response2_{driver_id}.png').info['Comment'] == flag:
             return 'ok'
         else:
             return 'corrupt'
