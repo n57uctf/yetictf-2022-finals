@@ -82,6 +82,9 @@ jobs:
       - name: Install requirements
         run: pip install -r ./merc2022/checker/requirements.txt
       
+      - name: docker-compose pull
+        run: docker-compose -f ./merc2022/docker-compose.yml pull
+
       - name: docker-compose up
         run: | 
           echo ---Building and starting up docker---
@@ -92,10 +95,13 @@ jobs:
         run: |
           curl -vvv http://127.0.0.1:6666  
       
+      - name: setting up checker
+        run: chmod +x ./merc2022/checker/checker.py
+
       - name: Run checker check
         run: |
           set +e
-          python ./merc2022/checker/checker.py check 127.0.0.1
+          ./merc2022/checker/checker.py check 127.0.0.1
           exitcode="$?"
           echo "exitcode=$exitcode" 
           if [[ $exitcode -ne "101" ]]; then exit $exitcode; fi
