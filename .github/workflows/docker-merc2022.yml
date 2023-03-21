@@ -91,7 +91,8 @@ jobs:
       - name: Run checker check
         run: |
           set +e
-          python ./merc2022/checker/checker.py 127.0.0.1
+          python ./merc2022/checker/checker.py check 127.0.0.1
+          exitcode="$?"
           echo "exitcode=$exitcode" 
           exit "$exitcode"
       
