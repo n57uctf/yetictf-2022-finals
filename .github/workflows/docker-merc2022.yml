@@ -42,8 +42,8 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
 
-      - name: Build and push Docker image
-        id: build-and-push
+      - name: Build Docker image
+        id: build
         uses: docker/build-push-action@v4
         with:
           context: ./merc2022/
@@ -51,42 +51,16 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          push: true
-  
-  test-checker:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-    
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+          push: false
 
-      # - name: Log into registry ${{ env.REGISTRY }}
-      #   if: github.event_name != 'pull_request'
-      #   uses: docker/login-action@v2
-      #   with:
-      #     registry: ${{ env.REGISTRY }}
-      #     username: ${{ github.actor }}
-      #     password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Log into ${{ env.REGISTRY }}
-        run: echo ${{ secrets.GITHUB_TOKEN }} | docker login  ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin 
-      
       - name: Setup python for checker
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
           cache: 'pip'
-      
+
       - name: Install requirements
         run: pip install -r ./merc2022/checker/requirements.txt
-      
-      - name: docker-compose pull
-        run: docker-compose -f ./merc2022/docker-compose.yml pull
 
       - name: docker-compose up
         run: | 
@@ -98,7 +72,7 @@ jobs:
         run: |
           curl -vvv http://127.0.0.1:6666  
       
-      - name: setting up checker
+      - name: Setting up checker
         run: chmod +x ./merc2022/checker/checker.py
 
       - name: Run checker check
@@ -109,8 +83,14 @@ jobs:
           echo "exitcode=$exitcode" 
           if [[ $exitcode -ne "101" ]]; then exit $exitcode; fi
           exit 0
-      
-      - name: Destroy and clean up
-        run: |
-          docker-compose -f ./merc2022/docker-compose.yml down --rmi --remove-orphans
-      
+
+      - name: Push Docker image
+        id: push
+        uses: docker/build-push-action@v4
+        with:
+          context: ./merc2022/
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          push: true
