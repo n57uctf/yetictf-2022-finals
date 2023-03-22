@@ -62,20 +62,13 @@ jobs:
       - name: Install requirements
         run: pip install -r ./merc2022/checker/requirements.txt
         
-      - run: docker context inspect
-        
-      - run: docker compose -f ./merc2022/docker-compose.yml  up -d --remove-orphans --no-build
-
-#       - name: Docker compose action
-#         uses: isbang/compose-action@v1.4.1
-#         with:
-#           compose-file: ./merc2022/docker-compose.yml
-#           down-flags: "--remove-orphans --rmi --volumes"
-#           up-flags: "--no-build"
-
+      - run: docker compose -f ./merc2022/docker-compose.yml up -d --remove-orphans --no-build
+      
+      - run: docker ps
+      
       - name: Curl test
         run: |
-          curl -vvv http://127.0.0.1:6666  
+          sleep 10 && curl -vvv http://127.0.0.1:6666
       
       - name: Setting up checker
         run: chmod +x ./merc2022/checker/checker.py
