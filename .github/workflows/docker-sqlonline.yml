@@ -102,7 +102,6 @@ jobs:
         run: |
           set +e
           ./SqlOnline/checker/checker.py put 127.0.0.1 test AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA= 1 2>> $GITHUB_OUTPUT
-#          echo "'$(cat stderr.txt)'" >> $GITHUB_OUTPUT && rm stderr.txt
           exitcode="$?"
           echo "exitcode=$exitcode" 
           if [[ $exitcode -ne "101" ]]; then exit $exitcode; fi
