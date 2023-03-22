@@ -67,7 +67,7 @@ jobs:
         with:
           compose-file: ./merc2022/docker-compose.yml
           down-flags: "--remove-orphans --rmi --volumes"
-          # up-flags: 
+          up-flags: "--no-build"
 
       - name: Curl test
         run: |
