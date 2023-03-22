@@ -111,7 +111,7 @@ jobs:
       - name: checker.py get
         run: |
           set +e
-          ./SqlOnline/checker/checker.py get 127.0.0.1 "${{ steps.put.outputs.stderr }}" AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA= 1
+          ./SqlOnline/checker/checker.py get 127.0.0.1 ${{ steps.put.outputs.stderr }} AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA= 1
           exitcode="$?"
           echo "exitcode=$exitcode" 
           if [[ $exitcode -ne "101" ]]; then exit $exitcode; fi
