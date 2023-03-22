@@ -75,7 +75,10 @@ jobs:
         with:
           python-version: '3.10'
           cache: 'pip'
-        
+
+      - name: Install checker requirements
+        run: pip install -r ./M3SS3NG3R/checker/requirements.txt
+
       - name: docker compose up
         run: docker compose -f ./M3SS3NG3R/docker-compose.yml up -d --remove-orphans --quiet-pull --no-build
       

@@ -96,6 +96,16 @@ jobs:
           echo "exitcode=$exitcode" 
           if [[ $exitcode -ne "101" ]]; then exit $exitcode; fi
           exit 0
+
+      - name: checker.py put
+        run: |
+          set +e
+          ./SqlOnline/checker/checker.py put 127.0.0.1 test AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA= 1
+          exitcode="$?"
+          echo "exitcode=$exitcode" 
+          if [[ $exitcode -ne "101" ]]; then exit $exitcode; fi
+          exit 0
       
+
       - name: docker compose down
         run: docker compose -f ./SqlOnline/sqlonline/docker-compose.yml down --remove-orphans --rmi all --volumes
