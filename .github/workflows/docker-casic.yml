@@ -76,6 +76,9 @@ jobs:
           python-version: '3.10'
           cache: 'pip'
         
+      - name: Install checker requirements
+        run: pip install -r ./Casic/checker/requirements.txt
+
       - name: docker compose up
         run: docker compose -f ./Casic/casic/docker-compose.yml up -d --remove-orphans --quiet-pull --no-build
       
