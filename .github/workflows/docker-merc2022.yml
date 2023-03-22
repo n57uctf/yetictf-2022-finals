@@ -41,17 +41,26 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-
-#       - name: Build Docker image
-#         id: build
-#         uses: docker/build-push-action@v4
-#         with:
-#           context: ./merc2022/
-#           tags: ${{ steps.meta.outputs.tags }}
-#           labels: ${{ steps.meta.outputs.labels }}
-#           cache-from: type=gha
-#           cache-to: type=gha,mode=max
-#           push: false
+      - name: Build Docker image
+        id: build
+        uses: docker/build-push-action@v4
+        with:
+          context: ./merc2022/
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          push: true
+  checker:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Setup python for checker
         uses: actions/setup-python@v4
@@ -59,21 +68,19 @@ jobs:
           python-version: '3.10'
           cache: 'pip'
 
-      - name: Install requirements
+      - name: Install checker requirements
         run: pip install -r ./merc2022/checker/requirements.txt
         
-      - run: docker compose -f ./merc2022/docker-compose.yml up -d --remove-orphans --no-build
+      - name: docker compose up
+        run: docker compose -f ./merc2022/docker-compose.yml up -d --remove-orphans --quiet-pull --no-build
       
       - run: docker ps
       
-      - name: Curl test
-        run: |
-          sleep 10 && curl -vvv http://127.0.0.1:6666
+      - run: sleep 10 && curl -vvv http://127.0.0.1:6666
       
-      - name: Setting up checker
-        run: chmod +x ./merc2022/checker/checker.py
+      - run: chmod +x ./merc2022/checker/checker.py
 
-      - name: Run checker check
+      - name: checker.py check
         run: |
           set +e
           ./merc2022/checker/checker.py check 127.0.0.1
@@ -81,14 +88,6 @@ jobs:
           echo "exitcode=$exitcode" 
           if [[ $exitcode -ne "101" ]]; then exit $exitcode; fi
           exit 0
-
-#       - name: Push Docker image
-#         id: push
-#         uses: docker/build-push-action@v4
-#         with:
-#           context: ./merc2022/
-#           tags: ${{ steps.meta.outputs.tags }}
-#           labels: ${{ steps.meta.outputs.labels }}
-#           cache-from: type=gha
-#           cache-to: type=gha,mode=max
-#           push: true
+      
+      - name: docker compose down
+        run: docker compose -f ./merc2022/docker-compose.yml down --remove-orphans --rmi all --volumes

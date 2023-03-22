@@ -3,6 +3,7 @@ version: "3"
 services:
 
   web:
+    image: "ghcr.io/leitosama/m3ss3ng3r:main"
     build: ./project
     restart: always
     volumes:

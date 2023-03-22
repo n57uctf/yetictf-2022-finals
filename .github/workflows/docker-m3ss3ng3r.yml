@@ -1,0 +1,90 @@
+name: Docker m3ss3ng3r
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'M3SS3NG3R/**'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository_owner }}/m3ss3ng3r
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+  
+      - name: Setup Docker buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log into registry ${{ env.REGISTRY }}
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      - name: Build Docker image
+        id: build
+        uses: docker/build-push-action@v4
+        with:
+          context: ./M3SS3NG3R/project/
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          push: true
+  checker:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup python for checker
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+        
+      - name: docker compose up
+        run: docker compose -f ./M3SS3NG3R/docker-compose.yml up -d --remove-orphans --quiet-pull --no-build
+      
+      - run: docker ps
+      
+      - run: sleep 10 && curl -vvv http://127.0.0.1:6666
+      
+      - run: chmod +x ./M3SS3NG3R/checker/checker.py
+
+      - name: checker.py check
+        run: |
+          set +e
+          ./M3SS3NG3R/checker/checker.py check 127.0.0.1
+          exitcode="$?"
+          echo "exitcode=$exitcode" 
+          if [[ $exitcode -ne "101" ]]; then exit $exitcode; fi
+          exit 0
+      
+      - name: docker compose down
+        run: docker compose -f ./M3SS3NG3R/docker-compose.yml down --remove-orphans --rmi all --volumes
