@@ -1,6 +1,6 @@
-FROM ubuntu:21.10
+FROM ubuntu:20.04
 MAINTAINER @bigger777
-RUN apt update -y && apt install -y tcpd xinetd libpq-dev libcurl4-gnutls-dev
+RUN apt update && apt install -y tcpd xinetd libpq-dev libcurl4-gnutls-dev
 RUN useradd casic
 COPY ./casic-config /etc/xinetd.d/casic
 COPY ./bin/casic /casic
