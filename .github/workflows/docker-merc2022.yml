@@ -42,16 +42,16 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
 
-      - name: Build Docker image
-        id: build
-        uses: docker/build-push-action@v4
-        with:
-          context: ./merc2022/
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          push: false
+#       - name: Build Docker image
+#         id: build
+#         uses: docker/build-push-action@v4
+#         with:
+#           context: ./merc2022/
+#           tags: ${{ steps.meta.outputs.tags }}
+#           labels: ${{ steps.meta.outputs.labels }}
+#           cache-from: type=gha
+#           cache-to: type=gha,mode=max
+#           push: false
 
       - name: Setup python for checker
         uses: actions/setup-python@v4
@@ -61,13 +61,17 @@ jobs:
 
       - name: Install requirements
         run: pip install -r ./merc2022/checker/requirements.txt
+        
+      - run: docker context inspect
+        
+      - run: docker compose up -d --remove-orphans --rmi --volumes
 
-      - name: Docker compose action
-        uses: isbang/compose-action@v1.4.1
-        with:
-          compose-file: ./merc2022/docker-compose.yml
-          down-flags: "--remove-orphans --rmi --volumes"
-          up-flags: "--no-build"
+#       - name: Docker compose action
+#         uses: isbang/compose-action@v1.4.1
+#         with:
+#           compose-file: ./merc2022/docker-compose.yml
+#           down-flags: "--remove-orphans --rmi --volumes"
+#           up-flags: "--no-build"
 
       - name: Curl test
         run: |
