@@ -7,7 +7,7 @@ networks:
 
 services:
   webserver:
-    image: "ghcr.io/leitosama/merc2022:main"
+    image: ghcr.io/leitosama/merc2022:main
     build:
       context: .
       dockerfile: Dockerfile
