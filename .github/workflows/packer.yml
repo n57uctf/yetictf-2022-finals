@@ -1,7 +1,7 @@
 name: packer
 
 on:
-  dispatch_workflow:
+  workflow_dispatch:
 
 jobs:
   packer:
