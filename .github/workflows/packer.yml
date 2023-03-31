@@ -4,7 +4,9 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - vulnbox.pkr.hcl
+      - 'vulnbox.pkr.hcl'
+      - '.packer/**'
+      - '.github/workflows/packer.yml'
 
 jobs:
   packer:
@@ -41,4 +43,4 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          path: ./packer-output/*
+          path: ./output-vulnbox/*
