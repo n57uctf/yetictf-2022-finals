@@ -32,6 +32,7 @@ variable "services" {
 }
 
 source "virtualbox-iso" "vulnbox" {
+  nested_virt = false
   headless = true
   guest_os_type = "ArchLinux_64"
   iso_url = "https://mirror.yandex.ru/archlinux/iso/2023.03.01/archlinux-x86_64.iso"
