@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'vulnbox.pkr.hcl'
+      - vulnbox.pkr.hcl
 
 jobs:
   packer:
@@ -15,9 +15,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Install virtualbox
-        run: sudo apt-get update && sudo apt-get install virtualbox
 
       - name: Setup `packer`
         uses: hashicorp/setup-packer@main
@@ -33,6 +30,10 @@ jobs:
       - name: Run `packer validate`
         id: validate
         run: PKR_VAR_bridgeadapter=${{ steps.if_detect.outputs.default_if }} packer validate ./vulnbox.pkr.hcl
+
+      - name: Install virtualbox
+        run: sudo apt-get update && sudo apt-get install virtualbox
+
     
       - name: Run `packer build`
         id: build
