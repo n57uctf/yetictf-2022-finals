@@ -1,0 +1,40 @@
+name: packer
+
+on:
+  dispatch_workflow:
+
+jobs:
+  packer:
+    runs-on: ubuntu-latest
+    name: Run Packer
+    env:
+      PKR_VAR_services: "'[\"Casic\",\"SqlOnline\"]'"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install virtualbox
+        run: sudo apt-get update && sudo apt-get install virtualbox
+
+      - name: Setup `packer`
+        uses: hashicorp/setup-packer@main
+
+      - name: Default interface autodetect
+        run: echo "DEFAULT_IF=$(ip r  | grep default | awk -F' ' '{print $5}')" >> $GITHUB_OUTPUT
+        id: if_detect
+
+      - name: Run `packer init`
+        id: init
+        run: PKR_VAR_bridgeadapter=${{ steps.if_detect.outputs.default_if }} packer init ./vulnbox.pkr.hcl
+
+      - name: Run `packer validate`
+        id: validate
+        run: PKR_VAR_bridgeadapter=${{ steps.if_detect.outputs.default_if }} packer validate ./vulnbox.pkr.hcl
+    
+      - name: Run `packer build`
+        id: build
+        run: PKR_VAR_bridgeadapter=${{ steps.if_detect.outputs.default_if }} packer build ./vulnbox.pkr.hcl
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: ./packer-output/*

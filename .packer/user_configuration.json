@@ -1,0 +1,63 @@
+{
+    "additional-repositories": [
+        "multilib"
+    ],
+    "archinstall-language": "English",
+    "audio": "No audio server",
+    "bootloader": "grub-install",
+    "config_version": "2.5.3",
+    "debug": false,
+    "harddrives": [
+        "/dev/sda"
+    ],
+    "hostname": "yetictf2023",
+    "kernels": [
+        "linux"
+    ],
+    "keyboard-layout": "us",
+    "mirror-region": {
+        "Russia": {
+            "http://mirror.kamtv.ru/archlinux/$repo/os/$arch": true,
+            "http://mirror.nw-sys.ru/archlinux/$repo/os/$arch": true,
+            "http://mirror.surf/archlinux/$repo/os/$arch": true,
+            "http://mirror.truenetwork.ru/archlinux/$repo/os/$arch": true,
+            "http://mirror.yandex.ru/archlinux/$repo/os/$arch": true,
+            "http://mirrors.powernet.com.ru/archlinux/$repo/os/$arch": true,
+            "https://mirror.kamtv.ru/archlinux/$repo/os/$arch": true,
+            "https://mirror.nw-sys.ru/archlinux/$repo/os/$arch": true,
+            "https://mirror.surf/archlinux/$repo/os/$arch": true,
+            "https://mirror.truenetwork.ru/archlinux/$repo/os/$arch": true,
+            "https://mirror.yal.sl-chat.ru/archlinux/$repo/os/$arch": true,
+            "https://mirror.yandex.ru/archlinux/$repo/os/$arch": true
+        }
+    },
+    "nic": {
+        "dhcp": true,
+        "dns": null,
+        "gateway": null,
+        "iface": null,
+        "ip": null,
+        "type": "iso"
+    },
+    "no_pkg_lookups": false,
+    "offline": false,
+    "packages": [
+        "virtualbox-guest-utils-nox",
+        "docker",
+        "docker-compose",
+        "git",
+        "openssh",
+        "wget",
+        "curl"
+    ],
+    "profile": {
+        "path": "/usr/lib/python3.10/site-packages/archinstall/profiles/minimal.py"
+    },
+    "script": "guided",
+    "silent": false,
+    "swap": true,
+    "sys-encoding": "UTF-8",
+    "sys-language": "en_US",
+    "timezone": "Asia/Novosibirsk",
+    "version": "2.5.4"
+}
