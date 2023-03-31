@@ -8,7 +8,7 @@ on:
 
 jobs:
   packer:
-    runs-on: ubuntu-latest
+    runs-on: macos-12
     name: Run Packer
     env:
       PKR_VAR_services: "[\"Casic\",\"SqlOnline\"]"
@@ -31,8 +31,8 @@ jobs:
         id: validate
         run: PKR_VAR_bridgeadapter=${{ steps.if_detect.outputs.default_if }} packer validate ./vulnbox.pkr.hcl
 
-      - name: Install virtualbox
-        run: sudo apt-get update && sudo apt-get install virtualbox
+#       - name: Install virtualbox
+#         run: sudo apt-get update && sudo apt-get install virtualbox
 
     
       - name: Run `packer build`
