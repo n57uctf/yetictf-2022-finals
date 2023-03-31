@@ -57,7 +57,7 @@ source "virtualbox-iso" "vulnbox" {
   vboxmanage_post = [
     ["modifyvm", "{{.Name}}", "--nic2", "bridged"],
     ["modifyvm", "{{.Name}}", "--bridgeadapter2", var.bridgeadapter],
-    ["modifyvm", "{{.Name}}", "--macaddress2", "0274616e756b"]
+    ["modifyvm", "{{.Name}}", "--macaddress2", "0274616e756b"],
     ["modifyvm", "{{.Name}}", "--cableconnected1", "off"]
   ]
   format = "ova"
