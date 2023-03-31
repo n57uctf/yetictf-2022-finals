@@ -32,6 +32,7 @@ variable "services" {
 }
 
 source "virtualbox-iso" "vulnbox" {
+  headless = true
   guest_os_type = "ArchLinux_64"
   iso_url = "https://mirror.yandex.ru/archlinux/iso/2023.03.01/archlinux-x86_64.iso"
   iso_checksum = "file:https://mirror.yandex.ru/archlinux/iso/2023.03.01/sha256sums.txt"
