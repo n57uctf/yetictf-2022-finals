@@ -45,7 +45,7 @@ jobs:
         id: build
         uses: docker/build-push-action@v4
         with:
-          context: ./M3SS3NG3R/project/
+          context: ./M3SS3NG3R/m3ss3ng3r/
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
@@ -80,7 +80,7 @@ jobs:
         run: pip install -r ./M3SS3NG3R/checker/requirements.txt
 
       - name: docker compose up
-        run: docker compose -f ./M3SS3NG3R/docker-compose.yml up -d --remove-orphans --quiet-pull --no-build
+        run: docker compose -f ./M3SS3NG3R/m3ss3ng3r/docker-compose.yml up -d --remove-orphans --quiet-pull --no-build
       
       - run: docker ps
       
@@ -98,4 +98,4 @@ jobs:
           exit 0
       
       - name: docker compose down
-        run: docker compose -f ./M3SS3NG3R/docker-compose.yml down --remove-orphans --rmi all --volumes
+        run: docker compose -f ./M3SS3NG3R/m3ss3ng3r/docker-compose.yml down --remove-orphans --rmi all --volumes
