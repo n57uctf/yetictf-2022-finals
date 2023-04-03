@@ -25,6 +25,11 @@ variable "event" {
   type = string
 }
 
+variable "services" {
+  type = list(string)
+}
+
+
 source "virtualbox-iso" "vulnbox" {
   vm_name = var.event
   nested_virt = true
