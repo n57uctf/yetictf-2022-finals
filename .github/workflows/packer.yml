@@ -24,7 +24,7 @@ jobs:
       - name: Get all services
         id: services
         run: |
-          s=$(find . -name docker-compose.yml -printf "\"%p\",")
+          s=$(find . -name docker-compose.yml "\"%p\",")
           echo "services=\"[${s::-1}]\"" >> $GITHUB_OUTPUT
 
       - name: Packer Cache restore
