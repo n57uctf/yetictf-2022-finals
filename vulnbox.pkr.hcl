@@ -8,30 +8,25 @@ packer {
 }
 
 # need to be autodetected before build as PKR_VAR_bridgeadapter or -var bridgeadapter
-variable "bridgeadapter" {
+variable "bridgeadapter" { 
   type = string
+  default = "eth0" 
 }
 
 variable "username" {
   type = string
-  default = "yeti"
 }
 
 variable "password" {
   type = string
-  default = "Password123"
 }
 
 variable "event" {
   type = string
-  default = "YetiCTF"
-}
-
-variable "services" {
-  type = list(string)
 }
 
 source "virtualbox-iso" "vulnbox" {
+  vm_name = var.event
   nested_virt = true
   headless = true
   guest_os_type = "ArchLinux_64"
@@ -39,13 +34,11 @@ source "virtualbox-iso" "vulnbox" {
   iso_checksum = "file:https://mirror.yandex.ru/archlinux/iso/2023.03.01/sha256sums.txt"
   ssh_username = var.username
   ssh_password = var.password
-  memory = 2048
-  cpus = 1
+  memory = 4096
+  cpus = 2
   shutdown_command = "echo '${var.password}' | sudo -S shutdown -P now"
   http_directory = ".packer"
   hard_drive_interface = "sata"
-  vm_name="packer_${var.event}"
-  # ssh_timeout = "5m"
   boot_command = [
     "<wait1m>",
     "echo '{\"!users\": [{\"!password\": \"${var.password}\",\"sudo\": true,\"username\": \"${var.username}\"}]}' > user_credentials.json<enter><wait>",
@@ -61,6 +54,11 @@ source "virtualbox-iso" "vulnbox" {
     ["modifyvm", "{{.Name}}", "--bridgeadapter2", var.bridgeadapter],
     ["modifyvm", "{{.Name}}", "--macaddress2", "0274616e756b"],
     ["modifyvm", "{{.Name}}", "--cableconnected1", "off"]
+  ]
+  export_opts = [
+    "--manifest",
+    "--vsys", "0",
+    "--description", "ssh ${var.username}@10.0.<N>.2\nPassword: ${var.password}"
   ]
   format = "ova"
 }
@@ -83,7 +81,7 @@ build {
     ]
   }
   provisioner "shell" {
-    inline = [for s in var.services: "echo ${var.password} | sudo -S docker-compose -f ./${lower(s)}/docker-compose.yml up --build -d"]
+    inline = [for s in var.services: "echo ${var.password} | sudo -S docker-compose -f ./${lower(s)}/docker-compose.yml up --quiet-pull -d"]
   }
 
   provisioner "shell"{
