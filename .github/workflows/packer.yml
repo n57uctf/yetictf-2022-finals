@@ -44,13 +44,9 @@ jobs:
           key: ${{ runner.os }}-packer-${{ hashFiles('vulnbox.pkr.hcl') }}
 
       - run: packer validate .
-        env: 
-          PKR_VAR_services: ${{ steps.services.outputs.services }}
-
+      
       - run: packer build .
-        env: 
-          PKR_VAR_services: ${{ steps.services.outputs.services }}
-
+      
       - name: Cache packer cache
         uses: actions/cache/save@v3
         with:
