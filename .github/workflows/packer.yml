@@ -34,11 +34,10 @@ jobs:
           vagrant version
           vagrant global-status
 
-      - run: Vagrant validate
+      - run: vagrant validate
         working-directory: ./.vulnbox/
 
-      - name: VM up
-        run: vagrant up --no-provision
+      - run: vagrant up --no-provision
         working-directory: ./.vulnbox/
           
       - run: vagrant provision
