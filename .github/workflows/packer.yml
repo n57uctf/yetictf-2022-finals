@@ -22,13 +22,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         
-      - name: Packer Cache restore
+      - name: Packer Cache config restore
         uses: actions/cache/restore@v3
         with:
-          path: |
-            ~/.config/packer/
-            ./packer_cache/
-          key: ${{ runner.os }}-packer-
+          path: ~/.config/packer/
+          key: ${{ runner.os }}-packerconfig-
 
       - name: Setup `packer`
         uses: hashicorp/setup-packer@main
@@ -36,15 +34,21 @@ jobs:
       - run: packer init .
         env:
           PACKER_GITHUB_API_TOKEN: ${{ secrets.PACKER_GITHUB_API_TOKEN }}
-
+      
       - name: Cache packer config
         uses: actions/cache/save@v3
         with:
           path: ~/.config/packer/
-          key: ${{ runner.os }}-packer-${{ hashFiles('vulnbox.pkr.hcl') }}
+          key: ${{ runner.os }}-packerconfig-${{ hashFiles('vulnbox.pkr.hcl') }}
 
       - run: packer validate .
       
+      - name: restore packer cache
+        uses: actions/cache/restore@v3
+        with:
+          path: ./packer_cache
+          key: ${{ runner.os }}-packer-
+          
       - run: packer build .
       
       - name: Cache packer cache
