@@ -17,16 +17,11 @@ jobs:
       PKR_VAR_password: Password123 # TODO: Fix hardcode password pls
       PKR_VAR_event: YetiCTF2022 # TODO: Fix hardcode
       ZIP_PASSWORD: Password123  # TODO: Fix hardcode password pls
+      PKR_VAR_services: '["Casic","M3SS3NG3R","SqlOnline","merc2022"]' # TODO: Fix hardcode
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Get all services
-        id: services
-        run: |
-          s=$(find . -name docker-compose.yml "\"%p\",")
-          echo "services=\"[${s::-1}]\"" >> $GITHUB_OUTPUT
-
+        
       - name: Packer Cache restore
         uses: actions/cache/restore@v3
         with:
