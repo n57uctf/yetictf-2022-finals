@@ -38,7 +38,6 @@ source "virtualbox-vm" "vulnbox" {
   guest_additions_mode = "disable"
   skip_nat_mapping = true
   ssh_port = 2222
-  ssh_timeout = "1m"
   vboxmanage_post = [
     ["modifyvm", "{{.Name}}", "--nic2", "bridged"],
     ["modifyvm", "{{.Name}}", "--bridgeadapter2", var.bridgeadapter],
