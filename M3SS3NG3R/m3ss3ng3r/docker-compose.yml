@@ -3,10 +3,11 @@ version: "3"
 services:
 
   web:
-    build: ./project
+    image: "ghcr.io/leitosama/m3ss3ng3r:main"
+    build: ./
     restart: always
     volumes:
-      - ./project:/usr/src/app
+      - ./:/usr/src/app
     ports:
       - 8004:8000
     environment:

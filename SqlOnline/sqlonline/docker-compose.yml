@@ -1,6 +1,7 @@
 version: '3.3'
 services:
   web:
+    image: "ghcr.io/leitosama/sqlonline:main"
     build:
       context: .
     ports:

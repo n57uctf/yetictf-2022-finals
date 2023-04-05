@@ -3,6 +3,7 @@ version: "3"
 services:
 
   casic:
+    image: "ghcr.io/leitosama/casic:main"
     build: .
     ports:
       - 7777:7777
