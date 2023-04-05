@@ -86,7 +86,7 @@ jobs:
         working-directory: ./.vulnbox/output-vulnbox/
 
       - name: Put to Yandex Object storage
-        run: aws s3 --endpoint-url=https://storage.yandexcloud.net cp --quiet ${PKR_VAR_event}_${{ steps.today.outputs.today }}.ova.zip s3://vulnbox/$PKR_VAR_event_${{ steps.today.outputs.today }}.ova.zip
+        run: aws s3 --endpoint-url=https://storage.yandexcloud.net cp --quiet ${PKR_VAR_event}_${{ steps.today.outputs.today }}.ova.zip s3://vulnbox/${PKR_VAR_event}_${{ steps.today.outputs.today }}.ova.zip
         working-directory: ./.vulnbox/output-vulnbox/
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.YC_ACCESS_KEY_ID }}
