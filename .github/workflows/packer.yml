@@ -59,10 +59,7 @@ jobs:
       - name: Check virtualbox machine settings
         run: vboxmanage showvminfo ${{ steps.vm-name.outputs.vm_name }}
 
-      - name: packer init & validate
-        run: |
-          packer init .
-          packer validate .
+      - run: packer validate .
         env:
           PACKER_GITHUB_API_TOKEN: ${{ secrets.PACKER_GITHUB_API_TOKEN }}
           PKR_VAR_vagrantbox: ${{ steps.vm-name.outputs.vm_name }}
